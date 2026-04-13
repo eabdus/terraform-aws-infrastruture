@@ -1,6 +1,7 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
+
 #Create VPC
 resource "aws_vpc" "ead-vpc" {
   cidr_block       = "10.10.0.0/16"
@@ -25,7 +26,7 @@ resource "aws_internet_gateway" "ead-gw" {
   vpc_id = aws_vpc.ead-vpc.id
 
   tags = {
-    Name = "main"
+    Name = "ead-gw"
   }
 }
 
@@ -51,11 +52,11 @@ resource "aws_route_table_association" "example" {
 
 #Create EC2 Instance
 resource "aws_instance" "web01" {
-  ami             = var.ami_ID
-  instance_type   = var.instance_type
-  key_name        = aws_key_pair.demokey.key_name
-  vpc_security_group_ids = [ aws_security_group.web01-sg.id ]
-  subnet_id       = aws_subnet.ead_subnet.id 
+  ami                    = var.ami_ID
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.demokey.key_name
+  vpc_security_group_ids = [aws_security_group.web01-sg.id]
+  subnet_id              = aws_subnet.ead_subnet.id
 
   tags = {
     Name = "web01"

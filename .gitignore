@@ -17,4 +17,4 @@ terraform.tfvars
 demokey
 demokey.pub
 keypair.tf
-.demokey
+.pub

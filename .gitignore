@@ -1,0 +1,19 @@
+#Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+.terraform.lock.hcl
+
+# Sensitive data
+*.tfvars
+*.tfvars.json
+terraform.tfvars
+
+# Environment Variables
+.env
+.env.*
+#SSH keys
+demokey
+demokey.pub
+keypair.tf

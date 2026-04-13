@@ -51,7 +51,7 @@ resource "aws_route_table_association" "example" {
 
 #Create EC2 Instance
 resource "aws_instance" "web01" {
-  ami             = var.ami_iD
+  ami             = var.ami_ID
   instance_type   = var.instance_type
   key_name        = aws_key_pair.demokey.key_name
   vpc_security_group_ids = [ aws_security_group.web01-sg.id ]

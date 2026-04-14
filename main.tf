@@ -16,6 +16,7 @@ resource "aws_subnet" "ead_subnet" {
   vpc_id     = aws_vpc.ead-vpc.id
   cidr_block = "10.10.1.0/24"
 
+
   tags = {
     Name = "ead_subnet"
   }
@@ -63,3 +64,19 @@ resource "aws_instance" "web01" {
   }
 
 }
+
+#Create EC2 Instance
+resource "aws_instance" "bastion" {
+  ami                         = var.ami_ID
+  instance_type               = var.instance_type
+  key_name                    = aws_key_pair.demokey.key_name
+  vpc_security_group_ids      = [aws_security_group.web01-sg.id]
+  subnet_id                   = aws_subnet.ead_subnet.id
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "bastion"
+  }
+
+}
+

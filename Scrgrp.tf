@@ -9,7 +9,7 @@ resource "aws_security_group" "web01-sg" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow-SSH" {
   security_group_id = aws_security_group.web01-sg.id
-  cidr_ipv4         = "182.6.5.143/32"
+  cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22

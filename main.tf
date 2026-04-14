@@ -51,7 +51,7 @@ resource "aws_route_table_association" "example" {
   route_table_id = aws_route_table.ead-rt.id
 }
 
-#Create EC2 Instance
+#Create EC2 Instance "Private"
 resource "aws_instance" "web01" {
   ami                    = var.ami_ID
   instance_type          = var.instance_type
@@ -65,12 +65,12 @@ resource "aws_instance" "web01" {
 
 }
 
-#Create EC2 Instance
+#Create EC2 Instance "Bastion"
 resource "aws_instance" "bastion" {
   ami                         = var.ami_ID
   instance_type               = var.instance_type
-  key_name                    = aws_key_pair.demokey.key_name
-  vpc_security_group_ids      = [aws_security_group.web01-sg.id]
+  key_name                    = aws_key_pair.bastion.key_name
+  vpc_security_group_ids      = [aws_security_group.bastion.id]
   subnet_id                   = aws_subnet.ead_subnet.id
   associate_public_ip_address = true
 

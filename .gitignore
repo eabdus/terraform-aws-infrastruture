@@ -16,5 +16,7 @@ terraform.tfvars
 #SSH keys
 demokey
 demokey.pub
+bastion
+bastion.pub
 keypair.tf
 .pub

@@ -40,3 +40,7 @@ variable "ami_ID" {
 variable "instance_type" {
   default = "t2.micro"
 }
+
+#Security Group
+variable "my_ip" {
+}

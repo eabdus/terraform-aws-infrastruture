@@ -46,7 +46,7 @@ resource "aws_internet_gateway" "ead_gw" {
   vpc_id = aws_vpc.ead_vpc.id
 
   tags = {
-    Name = "ead-gw"
+    Name = "ead_gw"
   }
 }
 
@@ -61,7 +61,7 @@ resource "aws_route_table" "ead_rtpublic" {
   }
 
   tags = {
-    Name = "ead_rt"
+    Name = "ead_rt_public"
   }
 }
 
@@ -75,7 +75,7 @@ resource "aws_route_table" "ead_rtprivate" {
   }
 
   tags = {
-    Name = "ead_rt"
+    Name = "ead_rt_private"
   }
 }
 

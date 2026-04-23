@@ -1,7 +1,7 @@
 # EC2-sg "Private"
-resource "aws_security_group" "web01-sg" {
+resource "aws_security_group" "web01_sg" {
   name   = "web01-sg"
-  vpc_id = aws_vpc.ead-vpc.id
+  vpc_id = aws_vpc.ead_vpc.id
 
   ingress {
     description     = "SSH from bastion"
@@ -22,10 +22,10 @@ resource "aws_security_group" "web01-sg" {
 # EC2-sg "Bastion"
 resource "aws_security_group" "bastion" {
   name   = "bastion"
-  vpc_id = aws_vpc.ead-vpc.id
+  vpc_id = aws_vpc.ead_vpc.id
 
   ingress {
-    description = "SSH from bastion"
+    description = "SSH for admin"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"

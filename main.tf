@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 #Create VPC
-resource "aws_vpc" "ead-vpc" {
+resource "aws_vpc" "ead_vpc" {
   cidr_block           = var.vpc_cidr
   instance_tenancy     = "default"
   enable_dns_support   = "true"
@@ -18,8 +18,8 @@ resource "aws_vpc" "ead-vpc" {
 #Create Subnet
 #1. Subnet public
 resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.ead-vpc.id
-  cidr_block              = "10.10.1.0/24"
+  vpc_id                  = aws_vpc.ead_vpc.id
+  cidr_block              = var.subnet_public
   map_public_ip_on_launch = "true"
   availability_zone       = var.zone1
 
@@ -31,8 +31,8 @@ resource "aws_subnet" "public" {
 
 #2. subnet private
 resource "aws_subnet" "private" {
-  vpc_id            = aws_vpc.ead-vpc.id
-  cidr_block        = "10.10.2.0/24"
+  vpc_id            = aws_vpc.ead_vpc.id
+  cidr_block        = var.subnet_private
   availability_zone = var.zone2
 
 
@@ -42,8 +42,8 @@ resource "aws_subnet" "private" {
 }
 
 #Create Internet Gateway
-resource "aws_internet_gateway" "ead-gw" {
-  vpc_id = aws_vpc.ead-vpc.id
+resource "aws_internet_gateway" "ead_gw" {
+  vpc_id = aws_vpc.ead_vpc.id
 
   tags = {
     Name = "ead-gw"
@@ -53,11 +53,11 @@ resource "aws_internet_gateway" "ead-gw" {
 #Create Route Table Public
 #1. Route table public
 resource "aws_route_table" "ead_rtpublic" {
-  vpc_id = aws_vpc.ead-vpc.id
+  vpc_id = aws_vpc.ead_vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.ead-gw.id
+    gateway_id = aws_internet_gateway.ead_gw.id
   }
 
   tags = {
@@ -67,7 +67,7 @@ resource "aws_route_table" "ead_rtpublic" {
 
 #2. Route table private
 resource "aws_route_table" "ead_rtprivate" {
-  vpc_id = aws_vpc.ead-vpc.id
+  vpc_id = aws_vpc.ead_vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
@@ -116,7 +116,7 @@ resource "aws_nat_gateway" "nat_gw" {
   tags = {
     Name = "NAT-gw"
   }
-  depends_on = [aws_internet_gateway.ead-gw]
+  depends_on = [aws_internet_gateway.ead_gw]
 }
 
 #Create EC2 Instance
@@ -125,7 +125,7 @@ resource "aws_instance" "web01" {
   ami                    = var.ami_ID
   instance_type          = var.instance_type
   key_name               = aws_key_pair.demokey.key_name
-  vpc_security_group_ids = [aws_security_group.web01-sg.id]
+  vpc_security_group_ids = [aws_security_group.web01_sg.id]
   subnet_id              = aws_subnet.private.id
 
 
